@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zr.dao.SysPermissionMapper">
+  <resultMap id="BaseResultMap" type="com.zr.model.SysPermission">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="parentId" jdbcType="INTEGER" property="parentid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="css" jdbcType="VARCHAR" property="css" />
+    <result column="href" jdbcType="VARCHAR" property="href" />
+    <result column="pertype" jdbcType="INTEGER" property="pertype" />
+    <result column="permission" jdbcType="VARCHAR" property="permission" />
+    <result column="sort" jdbcType="INTEGER" property="sort" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, parentId, name, css, href, pertype, permission, sort
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_permission
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectByroleid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    p.*
+    from sys_permission p inner join sys_role_permission rp on p.id = rp.permissionId
+    where rp.roleId = #{roleId}
+  </select>
+
+  <select id="selectByuserid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select distinct p.* from sys_permission p inner join sys_role_permission rp on p.id = rp.permissionId inner join sys_role_user ru on ru.roleId = rp.roleId
+    where ru.userId = #{userId} order by p.sort
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_permission
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zr.model.SysPermission">
+    insert into sys_permission (id, parentId, name, 
+      css, href, pertype, 
+      permission, sort)
+    values (#{id,jdbcType=INTEGER}, #{parentid,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, 
+      #{css,jdbcType=VARCHAR}, #{href,jdbcType=VARCHAR}, #{pertype,jdbcType=INTEGER}, 
+      #{permission,jdbcType=VARCHAR}, #{sort,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zr.model.SysPermission">
+    insert into sys_permission
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="parentid != null">
+        parentId,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="css != null">
+        css,
+      </if>
+      <if test="href != null">
+        href,
+      </if>
+      <if test="pertype != null">
+        pertype,
+      </if>
+      <if test="permission != null">
+        permission,
+      </if>
+      <if test="sort != null">
+        sort,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="parentid != null">
+        #{parentid,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="css != null">
+        #{css,jdbcType=VARCHAR},
+      </if>
+      <if test="href != null">
+        #{href,jdbcType=VARCHAR},
+      </if>
+      <if test="pertype != null">
+        #{pertype,jdbcType=INTEGER},
+      </if>
+      <if test="permission != null">
+        #{permission,jdbcType=VARCHAR},
+      </if>
+      <if test="sort != null">
+        #{sort,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+</mapper>
