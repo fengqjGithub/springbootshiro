@@ -1,6 +1,7 @@
 package com.zr.config.shiroConfig;
 
 import com.zr.common.dto.Token;
+import com.zr.utils.constract.SpringUtil;
 import net.sf.ehcache.Cache;
 import net.sf.ehcache.Element;
 import org.apache.commons.lang3.time.DateUtils;
@@ -21,8 +22,7 @@ import java.util.UUID;
 @Service(value = "tokenManager")
 public class EhCacheTokenManager implements TokenManager {
 
-    @Autowired
-    private EhCacheManager cacheManager;
+   private EhCacheManager cacheManager;
     /**
      * token过期秒数
      */
@@ -31,18 +31,24 @@ public class EhCacheTokenManager implements TokenManager {
 
     @Override
     public Token saveToken(UsernamePasswordToken usernamePasswordToken) {
+
+        if(cacheManager==null){
+            cacheManager = SpringUtil.getBean(EhCacheManager.class);
+        }
         Cache cache = cacheManager.getCacheManager().getCache("login_user_tokens");
 
         String key = UUID.randomUUID().toString();
         Element element = new Element(key, usernamePasswordToken);
         element.setTimeToLive(expireSeconds);
         cache.put(element);
-
         return new Token(key, DateUtils.addSeconds(new Date(), expireSeconds));
     }
 
     @Override
     public UsernamePasswordToken getToken(String key) {
+        if(cacheManager==null){
+            cacheManager = SpringUtil.getBean(EhCacheManager.class);
+        }
         Cache cache = cacheManager.getCacheManager().getCache("login_user_tokens");
         Element element = cache.get(key);
         if (element != null) {
@@ -55,6 +61,9 @@ public class EhCacheTokenManager implements TokenManager {
 
     @Override
     public boolean deleteToken(String key) {
+        if(cacheManager==null){
+            cacheManager = SpringUtil.getBean(EhCacheManager.class);
+        }
         Cache cache = cacheManager.getCacheManager().getCache("login_user_tokens");
         return cache.remove(key);
     }

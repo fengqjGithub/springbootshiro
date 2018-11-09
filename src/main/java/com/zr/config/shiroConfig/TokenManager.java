@@ -7,8 +7,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
  * Token管理器<br>
  * 目前提供两种实现<br>
  * 默认基于ehcache，如需更改，使用@Primary注解
- * 
- * @see EhCacheTokenManager
  *
  */
 public interface TokenManager {

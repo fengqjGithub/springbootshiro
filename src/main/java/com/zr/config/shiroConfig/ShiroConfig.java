@@ -122,6 +122,7 @@ public class ShiroConfig {
         filterChainDefinitionMap.put("/img/**", "anon");
         filterChainDefinitionMap.put("/js/**", "anon");
         filterChainDefinitionMap.put("/sys/login/**", "anon");
+        filterChainDefinitionMap.put("/sys/login.do", "anon");
         filterChainDefinitionMap.put("/files/*", "anon");
         filterChainDefinitionMap.put("/logout", "logout");
         filterChainDefinitionMap.put("/**", "authc");
@@ -133,7 +134,6 @@ public class ShiroConfig {
         logoutFilter.setRedirectUrl("/login.html");
 
         RestfulFilter restfulFilter = new RestfulFilter();
-
         shiroFilterFactoryBean.getFilters().put("authc", restfulFilter);
         shiroFilterFactoryBean.getFilters().put("logout", logoutFilter);
 

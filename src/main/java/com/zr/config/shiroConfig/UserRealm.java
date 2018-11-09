@@ -1,5 +1,7 @@
 package com.zr.config.shiroConfig;
 
+import com.alibaba.fastjson.JSONObject;
+import com.zr.common.ResponseBean;
 import com.zr.model.SysPermission;
 import com.zr.model.SysRole;
 import com.zr.model.SysUser;
@@ -14,6 +16,7 @@ import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
 import org.apache.shiro.util.ByteSource;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.util.StringUtils;
 
 import java.util.*;
@@ -47,7 +50,8 @@ public class UserRealm extends AuthorizingRealm {
         authorizationInfo.setStringPermissions(permissions);
         return authorizationInfo;
     }
-
+    private static String info = JSONObject
+            .toJSONString(new ResponseBean(HttpStatus.UNAUTHORIZED.value() + "", "用户不存在"));
     /**
      * @Description: 身份认证拦截器, 获取身份认证相关信息
      * @Param: AuthenticationToken 用于收集用户提交的身份及凭据

@@ -53,12 +53,14 @@
 			$(obj).attr("disabled", false);
 		} else {
 			$.ajax({
-				type : 'post',
-				url : '/sys/login',
-				data : $("#login-form").serialize(),
-				success : function() {
-					location.href = '/';
-				},
+                type : 'post',
+                url : '/sys/login/restful.do',
+                data : $("#login-form").serialize(),
+                dataType:"json",
+                success : function(data) {
+                    alert(data.data.token);
+                    location.href = '/';
+                },
 				error : function(xhr, textStatus, errorThrown) {
 					var msg = xhr.responseText;
 					var response = JSON.parse(msg);
@@ -66,7 +68,6 @@
 					$(obj).attr("disabled", false);
 				}
 			});
-
 		}
 	}
 </script>

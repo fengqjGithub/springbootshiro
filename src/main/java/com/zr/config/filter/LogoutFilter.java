@@ -1,7 +1,7 @@
 package com.zr.config.filter;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zr.common.dto.ResponseInfo;
+import com.zr.common.ResponseBean;
 import com.zr.config.shiroConfig.TokenManager;
 import com.zr.config.shiroConfig.UserUtil;
 import com.zr.model.SysUser;
@@ -55,8 +55,8 @@ public class LogoutFilter extends org.apache.shiro.web.filter.authc.LogoutFilter
         }
     }
 
-    private static String SUCCESS_INFO = JSONObject.toJSONString(new ResponseInfo(HttpStatus.OK.value() + "", "退出成功"));
+    private static String SUCCESS_INFO = JSONObject.toJSONString(new ResponseBean(HttpStatus.OK.value() + "", "退出成功"));
     private static String ERR_INFO = JSONObject
-            .toJSONString(new ResponseInfo(HttpStatus.BAD_REQUEST.value() + "", "退出失败,token不存在"));
+            .toJSONString(new ResponseBean(HttpStatus.BAD_REQUEST.value() + "", "退出失败,token不存在"));
 
 }

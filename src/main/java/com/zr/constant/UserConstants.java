@@ -1,5 +1,8 @@
 package com.zr.constant;
 
+import javax.annotation.PostConstruct;
+import java.util.List;
+
 public interface UserConstants {
 
     /**
@@ -15,4 +18,6 @@ public interface UserConstants {
      * 登陆token(nginx中默认header无视下划线)
      */
     String LOGIN_TOKEN = "login-token";
+
+
 }

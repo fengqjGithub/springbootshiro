@@ -38,7 +38,7 @@ function loginInfo(){
 	var user = "";
     $.ajax({
         type : 'get',
-        url : '/sys/login',
+        url : '/sys/login.do',
         async: false,
         success : function(data){
             if(data != null && data != ""){

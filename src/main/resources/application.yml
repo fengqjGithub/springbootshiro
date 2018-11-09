@@ -41,8 +41,11 @@ spring:
             dialect: org.hibernate.dialect.SQLServer2008Dialect
     data:
         mongodb:
-          database: bootmongodb
+          database: gktj
           uri: mongodb://localhost:27017
+    mvc:
+      servlet:
+            load-on-startup: 1
 mybatis:
   mapper-locations: classpath:mapping/*.xml
   type-aliases-package: com.zr.model
@@ -54,4 +57,8 @@ pagehelper:
     params: count=countSql
 token:
   expire:
-    seconds: 86400
+    seconds: 1000
+controller:
+  scanPackage: com.zr
+logging:
+  config: classpath:logback-spring.xml

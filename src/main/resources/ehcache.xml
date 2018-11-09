@@ -1,14 +1,12 @@
 <ehcache>
 
 	<diskStore path="caches/shiro-ehcache" />
-
-
-	<defaultCache maxElementsInMemory="10000" eternal="false"
+	<defaultCache maxElementsInMemory="1000000" eternal="false"
 		timeToIdleSeconds="120" timeToLiveSeconds="120" overflowToDisk="false"
 		diskPersistent="false" diskExpiryThreadIntervalSeconds="120" />
 
 	<!-- shiro默认配置 -->
-	<cache name="shiro-activeSessionCache" maxElementsInMemory="10000"
+	<cache name="shiro-activeSessionCache" maxElementsInMemory="1000000"
 		overflowToDisk="true" eternal="true" timeToLiveSeconds="0"
 		timeToIdleSeconds="0" diskPersistent="true"
 		diskExpiryThreadIntervalSeconds="600" />
@@ -18,9 +16,9 @@
 		maxElementsInMemory="1000" eternal="true" overflowToDisk="true" />
 
 	<!-- 登陆token，过期时间在TokenManager中设置 -->
-	<cache name="login_user_tokens" maxElementsInMemory="10000"
+	<cache name="login_user_tokens" maxElementsInMemory="1000000"
 		eternal="false" overflowToDisk="true" diskPersistent="true"
-		diskExpiryThreadIntervalSeconds="60" />
+		diskExpiryThreadIntervalSeconds="120" />
 
 </ehcache>
 

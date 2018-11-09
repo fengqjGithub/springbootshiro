@@ -5,12 +5,13 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
 
-//    @Bean
+    //    @Bean
 //    public MyInterceptor myinterceptor() {
 //        return new MyInterceptor();
 //    }
@@ -18,24 +19,25 @@ public class MyWebAppConfigurer extends WebMvcConfigurerAdapter {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new MyInterceptor() {
         })
-                .excludePathPatterns ("/swagger-ui.html")
-                .excludePathPatterns ("*.css")
-                .excludePathPatterns ("*.js")
-                .excludePathPatterns ("/swagger-resources")
-                .excludePathPatterns ("/v2/api-docs")
-                .excludePathPatterns ("/configuration/security")
-                .excludePathPatterns ("/configuration/ui")
+                .excludePathPatterns("/swagger-ui.html")
+                .excludePathPatterns("*.css")
+                .excludePathPatterns("*.js")
+                .excludePathPatterns("/swagger-resources")
+                .excludePathPatterns("/v2/api-docs")
+                .excludePathPatterns("/configuration/security")
+                .excludePathPatterns("/configuration/ui")
                 .excludePathPatterns("/resource")
-                .excludePathPatterns ("/login");
+                .excludePathPatterns("/login");
         super.addInterceptors(registry);
     }
 
-//    @Autowired
-//    SysConstant sysConstant;
-//    @Override
-//    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-//        registry.addResourceHandler("/excelDownload/**").addResourceLocations(sysConstant.getMappedPath());
-//        super.addResourceHandlers(registry);
-//    }
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/css/**").addResourceLocations("classpath:/static/css/");
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
+        registry.addResourceHandler("/images/**").addResourceLocations("classpath:/static/images/");
+        registry.addResourceHandler("/login.html").addResourceLocations("classpath:/static/login.html");
+        super.addResourceHandlers(registry);
+    }
 
 }
